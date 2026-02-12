@@ -12,18 +12,16 @@ import { ToastService } from "../../shared/toast/toast.service";
   styleUrl: "./clientes.page.scss",
 })
 export class ClientesPage {
-  // ✅ Angular DI moderno: disponible desde el inicio (evita error fb init)
   private fb = inject(FormBuilder);
   private api = inject(ClientesService);
   private toast = inject(ToastService);
 
-  // UI state
   q = signal("");
   rows = signal<Cliente[]>([]);
   isOpen = signal(false);
   editingId = signal<string | null>(null);
 
-  // Form (sin error)
+  // Form 
   form = this.fb.nonNullable.group({
     clienteId: ["", [Validators.required, Validators.minLength(2)]],
     nombre: ["", [Validators.required, Validators.minLength(3)]],
@@ -36,7 +34,7 @@ export class ClientesPage {
     estado: [true, [Validators.required]],
   });
 
-  // Tabla filtrada (búsqueda rápida por cualquier campo)
+  // Tabla filtrada 
   filtered = computed(() => {
     const term = this.q().trim().toLowerCase();
     if (!term) return this.rows();
@@ -125,8 +123,6 @@ save() {
     },
   });
 }
-
-
 
 
   del(c: Cliente) {
