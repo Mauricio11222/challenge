@@ -1,0 +1,152 @@
+{
+  "info": {
+    "_postman_id": "cf1e6e3f-4d35-4106-a56b-3a767428a760",
+    "name": "challenge",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "19130824",
+    "_collection_link": "https://go.postman.co/collection/19130824-cf1e6e3f-4d35-4106-a56b-3a767428a760?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "movimientos",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/movimientos",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "movimientos"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "PostClientes",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"clienteId\": \"C001\",\r\n  \"nombre\": \"Jose Lema\",\r\n  \"genero\": \"M\",\r\n  \"edad\": 30,\r\n  \"identificacion\": \"ID-001\",\r\n  \"direccion\": \"Otavalo sn y principal\",\r\n  \"telefono\": \"098254785\",\r\n  \"contrasena\": \"1234\",\r\n  \"estado\": true\r\n}\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/clientes",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "clientes"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "PostCuenta",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"numeroCuenta\": \"478758\",\r\n  \"tipoCuenta\": \"Ahorros\",\r\n  \"saldoInicial\": 2000,\r\n  \"estado\": true,\r\n  \"clienteId\": \"C001\"\r\n}\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/cuentas",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "cuentas"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Postmovimiento(retiro)",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"numeroCuenta\": \"478758\",\r\n  \"fecha\": \"2022-02-10\",\r\n  \"tipoMovimiento\": \"RETIRO\",\r\n  \"valor\": -575\r\n}\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/movimientos",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "movimientos"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Reporte",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/reportes?clienteId=C001&fechaInicio=2022-02-01&fechaFin=2022-02-28",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "reportes"
+          ],
+          "query": [
+            {
+              "key": "clienteId",
+              "value": "C001"
+            },
+            {
+              "key": "fechaInicio",
+              "value": "2022-02-01"
+            },
+            {
+              "key": "fechaFin",
+              "value": "2022-02-28"
+            }
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
