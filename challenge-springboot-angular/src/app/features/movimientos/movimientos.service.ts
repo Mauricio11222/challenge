@@ -6,10 +6,10 @@ export type TipoMovimiento = "DEPOSITO" | "RETIRO";
 
 export interface Movimiento {
   id: number;                // PK
-  fecha: string;             // ISO date or datetime string
+  fecha: string;             
   tipoMovimiento: TipoMovimiento;
-  valor: number;             // el backend valida signo, pero el front ayuda
-  saldo: number;             // saldo resultante (devuelto por backend)
+  valor: number;             
+  saldo: number;             
   numeroCuenta: string;      // FK
 }
 
