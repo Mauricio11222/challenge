@@ -1,0 +1,138 @@
+<div class="card">
+  <div class="header">
+    <div class="title">Movimientos</div>
+
+    <div class="tools">
+      <input
+        class="search"
+        placeholder="Búsqueda rápida..."
+        [value]="q()"
+        (input)="q.set(($any($event.target).value))"
+      />
+      <button class="btn" (click)="openCreate()">+ Nuevo</button>
+    </div>
+  </div>
+
+  <div style="height: 12px"></div>
+
+  <!-- filtros para reportes/listado -->
+  <div class="filters">
+    <div class="field">
+      <label>Cuenta</label>
+      <select [value]="filtroCuenta()" (change)="filtroCuenta.set(($any($event.target).value))">
+        <option value="">Todas</option>
+        <option *ngFor="let c of cuentas()" [value]="c.numeroCuenta">
+          {{ c.numeroCuenta }} • {{ c.tipoCuenta }}
+        </option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>Desde</label>
+      <input type="date" [value]="filtroDesde()" (input)="filtroDesde.set(($any($event.target).value))" />
+    </div>
+
+    <div class="field">
+      <label>Hasta</label>
+      <input type="date" [value]="filtroHasta()" (input)="filtroHasta.set(($any($event.target).value))" />
+    </div>
+
+    <div class="filterActions">
+      <button class="btn2" (click)="applyFilters()">Aplicar</button>
+      <button class="btn2" (click)="clearFilters()">Limpiar</button>
+    </div>
+  </div>
+
+  <div style="height: 12px"></div>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Fecha</th>
+        <th>Cuenta</th>
+        <th>Tipo</th>
+        <th>Valor</th>
+        <th>Saldo</th>
+        <th style="width: 190px"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let m of filtered()">
+        <td>{{ m.id }}</td>
+        <td>{{ m.fecha }}</td>
+        <td>{{ m.numeroCuenta }}</td>
+        <td>{{ m.tipoMovimiento }}</td>
+        <td>{{ m.valor }}</td>
+        <td>{{ m.saldo }}</td>
+        <td class="actionsCell">
+          <button class="btn2" (click)="openEdit(m)">Editar</button>
+          <button class="btnDanger" (click)="del(m)">Eliminar</button>
+        </td>
+      </tr>
+
+      <tr *ngIf="filtered().length === 0">
+        <td colspan="7" class="empty">Sin registros</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- MODAL -->
+<div class="modal" *ngIf="isOpen()">
+  <div class="modalCard">
+    <div class="header">
+      <div class="title">{{ editingId() ? "Editar movimiento" : "Nuevo movimiento" }}</div>
+      <button class="btn2" (click)="close()">Cerrar</button>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="save()">
+      <div class="row">
+        <div class="col field">
+          <label>Cuenta</label>
+          <select formControlName="numeroCuenta">
+            <option value="">Seleccione</option>
+            <option *ngFor="let c of cuentas()" [value]="c.numeroCuenta">
+              {{ c.numeroCuenta }} • {{ c.tipoCuenta }}
+            </option>
+          </select>
+          <small class="error" *ngIf="touched('numeroCuenta')">Requerido</small>
+        </div>
+
+        <div class="col field">
+          <label>Fecha</label>
+          <input type="date" formControlName="fecha" />
+          <small class="error" *ngIf="touched('fecha')">Requerido</small>
+        </div>
+
+        <div class="col field">
+          <label>Tipo</label>
+          <select formControlName="tipoMovimiento">
+            <option value="">Seleccione</option>
+            <option *ngFor="let t of tipos" [value]="t">{{ t }}</option>
+          </select>
+          <small class="error" *ngIf="touched('tipoMovimiento')">Requerido</small>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col field">
+          <label>Valor</label>
+          <input type="number" formControlName="valor" />
+          <small class="error" *ngIf="touched('valor')">Debe ser mayor a 0</small>
+          <div class="hint">
+            * Depósito se envía positivo, Retiro se envía negativo (se normaliza automáticamente).
+          </div>
+        </div>
+
+        <div class="col"></div>
+        <div class="col"></div>
+      </div>
+
+      <div class="actions">
+        <button class="btn" type="submit" [disabled]="form.invalid">Guardar</button>
+      </div>
+    </form>
+  </div>
+</div>

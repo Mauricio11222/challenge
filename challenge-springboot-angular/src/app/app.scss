@@ -1,0 +1,10 @@
+@use "./shared/styles/variables" as *;
+
+.nav { display: flex; gap: 12px; flex-wrap: wrap; }
+.nav a {
+  padding: 8px 10px;
+  border-radius: 999px;
+  border: 1px solid $border;
+  color: $muted;
+}
+.nav a:hover { color: $text; }

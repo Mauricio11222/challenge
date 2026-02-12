@@ -1,0 +1,16 @@
+@use "./variables" as *;
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  overflow: hidden;
+  border-radius: $radius;
+  border: 1px solid $border;
+}
+th, td { padding: 10px; border-bottom: 1px solid $border; text-align: left; }
+th { color: $muted; font-weight: 600; background: rgba(255,255,255,.04); }
+tr:hover td { background: rgba(255,255,255,.03); }
+.badge {
+  padding: 2px 8px; border-radius: 999px;
+  border: 1px solid $border; color: $muted; font-size: 12px;
+}

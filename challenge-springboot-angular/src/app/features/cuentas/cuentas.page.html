@@ -1,0 +1,109 @@
+<div class="card">
+  <div class="header">
+    <div class="title">Cuentas</div>
+
+    <div class="tools">
+      <input
+        class="search"
+        placeholder="Búsqueda rápida..."
+        [value]="q()"
+        (input)="q.set(($any($event.target).value))"
+      />
+      <button class="btn" (click)="openCreate()">+ Nueva</button>
+    </div>
+  </div>
+
+  <div style="height: 12px"></div>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Número</th>
+        <th>Tipo</th>
+        <th>Saldo inicial</th>
+        <th>Estado</th>
+        <th>Cliente</th>
+        <th style="width: 190px"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let c of filtered()">
+        <td>{{ c.numeroCuenta }}</td>
+        <td>{{ c.tipoCuenta }}</td>
+        <td>{{ c.saldoInicial }}</td>
+        <td><span class="badge">{{ c.estado ? "Activa" : "Inactiva" }}</span></td>
+        <td>{{ clienteLabel(c.clienteId) }}</td>
+
+        <td class="actionsCell">
+          <button class="btn2" (click)="openEdit(c)">Editar</button>
+          <button class="btnDanger" (click)="del(c)">Eliminar</button>
+        </td>
+      </tr>
+
+      <tr *ngIf="filtered().length === 0">
+        <td colspan="6" class="empty">Sin registros</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- MODAL -->
+<div class="modal" *ngIf="isOpen()">
+  <div class="modalCard">
+    <div class="header">
+      <div class="title">{{ editingId() ? "Editar cuenta" : "Nueva cuenta" }}</div>
+      <button class="btn2" (click)="close()">Cerrar</button>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="save()">
+      <div class="row">
+        <div class="col field">
+          <label>Número cuenta</label>
+          <input formControlName="numeroCuenta" [readonly]="!!editingId()" />
+          <small class="error" *ngIf="touched('numeroCuenta')">Requerido</small>
+        </div>
+
+        <div class="col field">
+          <label>Tipo cuenta</label>
+          <select formControlName="tipoCuenta">
+            <option value="">Seleccione</option>
+            <option *ngFor="let t of tipos" [value]="t">{{ t }}</option>
+          </select>
+          <small class="error" *ngIf="touched('tipoCuenta')">Requerido</small>
+        </div>
+
+        <div class="col field">
+          <label>Saldo inicial</label>
+          <input type="number" formControlName="saldoInicial" />
+          <small class="error" *ngIf="touched('saldoInicial')">Debe ser >= 0</small>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col field">
+          <label>Cliente</label>
+          <select formControlName="clienteId">
+            <option value="">Seleccione</option>
+            <option *ngFor="let cl of clientes()" [value]="cl.clienteId">
+              {{ cl.nombre }} ({{ cl.clienteId }})
+            </option>
+          </select>
+          <small class="error" *ngIf="touched('clienteId')">Requerido</small>
+        </div>
+
+        <div class="col field">
+          <label>Estado</label>
+          <select formControlName="estado">
+            <option [ngValue]="true">True</option>
+            <option [ngValue]="false">False</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn" type="submit" [disabled]="form.invalid">Guardar</button>
+      </div>
+    </form>
+  </div>
+</div>

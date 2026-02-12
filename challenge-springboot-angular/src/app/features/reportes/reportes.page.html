@@ -1,0 +1,111 @@
+<div class="card">
+  <div class="header">
+    <div>
+      <div class="title">Reportes • Estado de cuenta</div>
+      <div class="subtle">Rango de fechas + cliente </div>
+    </div>
+    <div class="tools">
+      <button class="btn2" (click)="clear()" [disabled]="!data()">Limpiar</button>
+    </div>
+  </div>
+
+  <div style="height: 12px"></div>
+
+  <form class="filters" [formGroup]="form" (ngSubmit)="run()">
+    <div class="field">
+      <label>Cliente</label>
+      <select formControlName="clienteId">
+        <option value="">Seleccione</option>
+        <option *ngFor="let cl of clientes()" [value]="cl.clienteId">
+          {{ cl.nombre }} ({{ cl.clienteId }})
+        </option>
+      </select>
+      <small class="error" *ngIf="touched('clienteId')">Requerido</small>
+    </div>
+
+    <div class="field">
+      <label>Desde</label>
+      <input type="date" formControlName="desde" />
+      <small class="error" *ngIf="touched('desde')">Requerido</small>
+    </div>
+
+    <div class="field">
+      <label>Hasta</label>
+      <input type="date" formControlName="hasta" />
+      <small class="error" *ngIf="touched('hasta')">Requerido</small>
+    </div>
+
+    <div class="actionsInline">
+      <button class="btn" type="submit" [disabled]="form.invalid">Generar</button>
+      <button class="btn2" type="button" (click)="downloadPdf()" [disabled]="!data()?.pdfBase64">
+        Descargar PDF
+      </button>
+    </div>
+  </form>
+
+  <div style="height: 16px"></div>
+
+  <div *ngIf="data() as r">
+    <div class="summary">
+      <div class="card mini">
+        <div class="subtle">Cliente</div>
+        <div class="big">{{ r.clienteId }}</div>
+      </div>
+      <div class="card mini">
+        <div class="subtle">Rango</div>
+        <div class="big">{{ r.fechaInicio }} → {{ r.fechaFin }}</div>
+      </div>
+      <div class="card mini">
+        <div class="subtle">Total Débitos</div>
+        <div class="big">{{ totalDebitos() }}</div>
+      </div>
+      <div class="card mini">
+        <div class="subtle">Total Créditos</div>
+        <div class="big">{{ totalCreditos() }}</div>
+      </div>
+    </div>
+
+    <div style="height: 12px"></div>
+
+    <div class="card" *ngFor="let c of r.cuentas" style="margin-bottom: 12px;">
+      <div class="header">
+        <div>
+          <div class="title">Cuenta {{ c.numeroCuenta }} • {{ c.tipoCuenta }}</div>
+          <div class="subtle">Saldo actual: {{ c.saldoDisponible  }}</div>
+        </div>
+        <div class="subtle">
+          Débitos: {{ c.totalDebitos }} • Créditos: {{ c.totalCreditos }}
+        </div>
+      </div>
+
+      <div style="height: 10px"></div>
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Tipo</th>
+            <th>Valor</th>
+            <th>Saldo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let m of c.movimientos">
+            <td>{{ m.fecha }}</td>
+            <td>{{ m.tipoMovimiento }}</td>
+            <td>{{ m.valor }}</td>
+            <td>{{ m.saldo }}</td>
+          </tr>
+
+          <tr *ngIf="c.movimientos?.length === 0">
+            <td colspan="4" class="empty">Sin movimientos en el rango</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div *ngIf="!data()" class="emptyState">
+    Genera un reporte seleccionando cliente y rango de fechas.
+  </div>
+</div>

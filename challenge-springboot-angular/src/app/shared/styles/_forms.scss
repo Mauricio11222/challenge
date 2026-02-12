@@ -1,0 +1,15 @@
+@use "./variables" as *;
+
+.field { display: flex; flex-direction: column; gap: 6px; }
+label { font-size: 12px; color: $muted; }
+input, select {
+  height: 40px;
+  padding: 0 10px;
+  border-radius: 12px;
+  border: 1px solid $border;
+  background: $surface2;
+  color: $text;
+  outline: none;
+}
+small.error { color: $danger; }
+.actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 10px; }

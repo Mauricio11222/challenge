@@ -1,0 +1,14 @@
+@use "./variables" as *;
+
+.container { max-width: 1100px; margin: 0 auto; padding: 22px; }
+.card {
+  background: $surface;
+  border: 1px solid $border;
+  border-radius: $radius;
+  padding: $pad;
+}
+.row { display: flex; gap: 12px; flex-wrap: wrap; }
+.col { flex: 1 1 260px; }
+.header { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.title { font-size: 20px; font-weight: 700; }
+.subtle { color: $muted; }

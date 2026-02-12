@@ -1,0 +1,37 @@
+@use "../../shared/styles/variables" as *;
+
+.tools { display: flex; gap: 10px; align-items: center; }
+.search { width: 260px; }
+
+.filters {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr auto;
+  gap: 12px;
+  align-items: end;
+}
+.filterActions { display: flex; gap: 10px; }
+
+.hint { margin-top: 6px; font-size: 12px; color: $muted; }
+
+.btn, .btn2, .btnDanger {
+  height: 38px; padding: 0 12px; border-radius: 12px;
+  border: 1px solid $border; background: rgba(255,255,255,.06);
+  color: $text; cursor: pointer;
+}
+.btn:hover, .btn2:hover { background: rgba(255,255,255,.10); }
+.btnDanger { border-color: rgba($danger,.5); }
+
+.actionsCell { display: flex; gap: 8px; justify-content: flex-end; }
+.empty { color: $muted; text-align: center; padding: 16px; }
+
+.modal {
+  position: fixed; inset: 0; background: rgba(0,0,0,.55);
+  display: grid; place-items: center; padding: 18px;
+}
+.modalCard {
+  width: min(980px, 100%);
+  background: $surface;
+  border: 1px solid $border;
+  border-radius: 16px;
+  padding: 14px;
+}

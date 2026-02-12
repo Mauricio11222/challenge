@@ -1,0 +1,12 @@
+@use "../styles/variables" as *;
+
+.toast {
+  position: fixed; right: 18px; bottom: 18px;
+  background: $surface; border: 1px solid $border;
+  border-radius: 14px; padding: 10px 12px;
+  display: flex; gap: 10px; align-items: center;
+  min-width: 260px;
+}
+.toast[data-kind="error"] { border-color: rgba($danger,.6); }
+.toast[data-kind="ok"] { border-color: rgba($ok,.6); }
+button { background: transparent; border: 0; color: $muted; cursor: pointer; }

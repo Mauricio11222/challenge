@@ -1,0 +1,17 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: challenge-springboot-api
+  datasource:
+    url: jdbc:postgresql://localhost:5432/challenge
+    username: challenge
+    password: challenge
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true

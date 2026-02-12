@@ -1,0 +1,133 @@
+<div class="card">
+  <div class="header">
+    <div class="title">Clientes</div>
+
+    <div class="tools">
+      <input
+        class="search"
+        placeholder="Búsqueda rápida..."
+        [value]="q()"
+        (input)="q.set(($any($event.target).value))"
+      />
+      <button class="btn" (click)="openCreate()">+ Nuevo</button>
+    </div>
+  </div>
+
+  <div style="height: 12px"></div>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ClienteId</th>
+        <th>Nombre</th>
+        <th>Identificación</th>
+        <th>Teléfono</th>
+        <th>Estado</th>
+        <th style="width: 190px"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let c of filtered()">
+        <td>{{ c.clienteId }}</td>
+        <td>{{ c.nombre }}</td>
+        <td>{{ c.identificacion }}</td>
+        <td>{{ c.telefono }}</td>
+        <td><span class="badge">{{ c.estado ? "Activo" : "Inactivo" }}</span></td>
+        <td class="actionsCell">
+          <button class="btn2" (click)="openEdit(c)">Editar</button>
+          <button class="btnDanger" (click)="del(c)">Eliminar</button>
+        </td>
+      </tr>
+
+      <tr *ngIf="filtered().length === 0">
+        <td colspan="6" class="empty">Sin registros</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- MODAL -->
+<div class="modal" *ngIf="isOpen()">
+  <div class="modalCard">
+    <div class="header">
+      <div class="title">{{ editingId() ? "Editar cliente" : "Nuevo cliente" }}</div>
+      <button class="btn2" (click)="close()">Cerrar</button>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="save()">
+      <div class="row">
+        <div class="col field">
+          <label>ClienteId</label>
+          <input formControlName="clienteId" [readonly]="!!editingId()" />
+          <small class="error" *ngIf="touched('clienteId')">Requerido</small>
+        </div>
+
+        <div class="col field">
+          <label>Nombre</label>
+          <input formControlName="nombre" />
+          <small class="error" *ngIf="touched('nombre')">Requerido (mín 3)</small>
+        </div>
+
+        <div class="col field">
+          <label>Género</label>
+          <select formControlName="genero">
+            <option value="">Seleccione</option>
+            <option>Masculino</option>
+            <option>Femenino</option>
+            <option>Otro</option>
+          </select>
+          <small class="error" *ngIf="touched('genero')">Requerido</small>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col field">
+          <label>Edad</label>
+          <input type="number" formControlName="edad" />
+          <small class="error" *ngIf="touched('edad')">Debe ser >= 0</small>
+        </div>
+
+        <div class="col field">
+          <label>Identificación</label>
+          <input formControlName="identificacion" />
+          <small class="error" *ngIf="touched('identificacion')">Requerido</small>
+        </div>
+
+        <div class="col field">
+          <label>Teléfono</label>
+          <input formControlName="telefono" />
+          <small class="error" *ngIf="touched('telefono')">Requerido</small>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col field">
+          <label>Dirección</label>
+          <input formControlName="direccion" />
+          <small class="error" *ngIf="touched('direccion')">Requerido</small>
+        </div>
+
+        <div class="col field">
+          <label>Contraseña</label>
+          <input type="password" formControlName="contrasena" />
+          <small class="error" *ngIf="touched('contrasena')">Requerido (mín 4)</small>
+        </div>
+
+        <div class="col field">
+          <label>Estado</label>
+          <select formControlName="estado">
+            <option [ngValue]="true">True</option>
+            <option [ngValue]="false">False</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn" type="button" (click)="save()" >
+          Guardar
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>
