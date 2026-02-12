@@ -23,7 +23,7 @@ export const httpErrorInterceptor: HttpInterceptorFn = (req, next) => {
       // Mostrar mensaje global
       toast.error(msg);
 
-      // Re-lanzar el error para que el subscribe de la página también pueda capturarlo si quiere
+      // Re-lanzar el error
       return throwError(() => error);
     })
   );
