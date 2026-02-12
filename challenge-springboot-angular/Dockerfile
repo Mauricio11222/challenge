@@ -4,10 +4,11 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm ci
 COPY . .
-RUN npm run build
+RUN npm run build  # Esto genera dist/challenge-springboot-angular/browser
 
 # Nginx
 FROM nginx:alpine
 COPY nginx.conf /etc/nginx/conf.d/default.conf
-COPY --from=build /app/dist/challenge-springboot-angular /usr/share/nginx/html
+# Movemos browser al root de Nginx
+COPY --from=build /app/dist/challenge-springboot-angular/browser /usr/share/nginx/html
 EXPOSE 80

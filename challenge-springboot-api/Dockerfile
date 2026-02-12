@@ -1,12 +1,21 @@
-# Build (Maven wrapper)
-FROM eclipse-temurin:21-jdk AS build
+# ---------- BUILD ----------
+FROM maven:3.9.6-eclipse-temurin-21 AS build
 WORKDIR /app
 
-COPY . .
-RUN chmod +x mvnw || true
-RUN ./mvnw -q -DskipTests package
+# Copiamos solo pom primero (mejor cache)
+COPY pom.xml .
 
-# Run
+# Descargamos dependencias
+RUN mvn dependency:go-offline
+
+# Copiamos el código fuente
+COPY src ./src
+
+# Empaquetamos
+RUN mvn -DskipTests package
+
+
+# ---------- RUN ----------
 FROM eclipse-temurin:21-jre
 WORKDIR /app
 

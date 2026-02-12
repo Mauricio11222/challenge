@@ -14,9 +14,13 @@ public class CorsConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/api/**")
-                        .allowedOrigins("http://localhost:4200")
+                        .allowedOrigins(
+                            "http://localhost",       // por Nginx en Docker
+                            "http://localhost:4200"   // desarrollo (ng serve)
+                        )
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-                        .allowedHeaders("*");
+                        .allowedHeaders("*")
+                        .allowCredentials(true);    
             }
         };
     }
