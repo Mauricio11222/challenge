@@ -37,7 +37,6 @@ export class CuentasPage {
     clienteId: ["", [Validators.required]],
   });
 
-  // búsqueda rápida SIN Object.values 
   filtered = computed(() => {
     const term = this.q().trim().toLowerCase();
     if (!term) return this.rows();
@@ -118,7 +117,6 @@ export class CuentasPage {
     const raw = this.form.getRawValue();
     const id = this.editingId();
 
-    // si edita, no cambies numeroCuenta
     if (id) raw.numeroCuenta = id;
 
     const req = id ? this.api.update(id, raw as Cuenta) : this.api.create(raw as Cuenta);
