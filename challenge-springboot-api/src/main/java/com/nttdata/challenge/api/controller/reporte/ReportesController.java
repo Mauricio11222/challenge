@@ -30,7 +30,6 @@ public class ReportesController {
         LocalDate inicio = parseDateOrBadRequest(fechaInicio, "fechaInicio");
         LocalDate fin = parseDateOrBadRequest(fechaFin, "fechaFin");
 
-        // opcional: comprobar rango
         if (inicio.isAfter(fin)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "fechaInicio no puede ser posterior a fechaFin");
         }
