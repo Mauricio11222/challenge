@@ -28,7 +28,7 @@ export class ReportesPage {
     hasta: ["", Validators.required],
   });
 
-  // Totales globales (suma de todas las cuentas)
+  // suma de todas las cuentas
   totalDebitos = computed(() => {
     const r = this.data();
     if (!r) return 0;
