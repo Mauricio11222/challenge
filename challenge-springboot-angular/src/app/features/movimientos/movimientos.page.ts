@@ -40,7 +40,6 @@ export class MovimientosPage {
     valor: [0, [Validators.required, Validators.min(0.01)]],
   });
 
-  // búsqueda rápida (sin Object.values)
   filtered = computed(() => {
     const term = this.q().trim().toLowerCase();
     if (!term) return this.rows();
